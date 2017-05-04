@@ -10,20 +10,31 @@
 
 {% set activeComment = craft.comments.getActiveComment() %}
 
-<form class="form-inline comment-form" role="form" action="" method="post" accept-charset="UTF-8">
+{% set airdataPlugin = craft.plugins.getPlugin('airdata', false) %}
+{% if airdataPlugin.isEnabled() %}
+    {% set airdataUser = craft.airdata.user|default([]) %}
+{% endif %}
+
+<form class="form-inline comment-form callout" role="form" action="" method="post" accept-charset="UTF-8">
     <input type="hidden" name="action" value="comments/save">
     <input type="hidden" name="elementId" value="{{ element.id }}">
     {% if comment is defined %}
         {% if comment.id %}<input type="hidden" name="parentId" value="{{ comment.id }}">{% endif %}
     {% endif %}
-    
+
     {# Anti-spam and security measures #}
     {{ craft.comments.protect() }}
     {{ getCsrfInput() }}
 
     {% if not currentUser %}
+
         <div class="form-group name-input">
-            <input class="form-control" name="fields[name]" type="text" placeholder="Your name" value="{{ attribute(activeComment, 'name') }}">
+            {% if airdataUser is defined and airdataUser.firstname is defined %}
+                {% set airdataName = [(airdataUser is defined and airdataUser.firstname is defined) ? airdataUser.firstname : '', (airdataUser is defined and airdataUser.lastname is defined) ? airdataUser.lastname : '']|join(' ') %}
+                <input class="form-control" name="fields[name]" type="text" placeholder="Your name" value="{{ airdataName }}">
+            {% else %}
+                <input class="form-control" name="fields[name]" type="text" placeholder="Your name" value="{{ attribute(activeComment, 'name') }}">
+            {% endif %}
 
             {% if activeComment is defined %}
                 <div class="comment-errors-container">
@@ -33,7 +44,11 @@
         </div>
 
         <div class="form-group email-input">
-            <input class="form-control" name="fields[email]" type="text" placeholder="Your email" value="{{ attribute(activeComment, 'email') }}">
+            {% if airdataUser is defined and airdataUser.email is defined %}
+                <input class="form-control" name="fields[email]" type="text" placeholder="Your email" value="{{ airdataUser.email }}">
+            {% else %}
+                <input class="form-control" name="fields[email]" type="text" placeholder="Your email" value="{{ attribute(activeComment, 'email') }}">
+            {% endif %}
 
             {% if activeComment is defined %}
                 <div class="comment-errors-container">
@@ -55,7 +70,7 @@
         {% endif %}
     </div>
 
-    <div class="form-group comment-input-btn">
-        <button type="submit" class="btn btn-default">Add Comment</button>
+    <div class="form-group comment-input-btn text-right">
+        <button type="submit" class="button">Add Comment</button>
     </div>
 </form>

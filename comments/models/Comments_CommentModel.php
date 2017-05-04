@@ -92,7 +92,7 @@ class Comments_CommentModel extends BaseElementModel
         } else {
             $excerpt = $this->comment;
         }
-        
+
         return $excerpt;
     }
 
@@ -283,7 +283,7 @@ class Comments_CommentModel extends BaseElementModel
     {
         return craft()->comments_vote->isOverDownvoteThreshold($this);
     }
-    
+
 
 
     // Protected Methods
