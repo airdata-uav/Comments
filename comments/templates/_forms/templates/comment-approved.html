@@ -60,10 +60,11 @@
 
             {% if not comment.isClosed %}
                 <a href="#" class="comment-reply" itemprop="replyToUrl">
-                    <i class="fa fa-reply"></i> Reply
+					<i class="fa fa-reply"></i>
+                    Reply
                 </a>
             {% endif %}
-
+            
             <a href="#" class="comment-toggle">
                 <i class="fa fa-comment"></i>
                 {{ comment.descendants | length }} Comments
@@ -71,24 +72,24 @@
 
 
             {% if currentUser %}
-                {% if comment.canTrash() %}
-                    <a href="{{ comment.trashActionUrl }}" class="comment-delete">
-                        <i class="fa fa-times"></i> Delete
-                    </a>
-                {% endif %}
+				{% if comment.canTrash() %}
+					<a href="{{ comment.trashActionUrl }}" class="comment-delete">
+						<i class="fa fa-times"></i> Delete
+					</a>
+				{% endif %}
 
-                {% if settings.allowFlagging %}
-                    {% if comment.flagActionUrl %}
-                        <a href="{{ comment.flagActionUrl }}" class="comment-flag">
-                            <i class="fa fa-flag"></i> Flag as inappropriate
-                        </a>
-                    {% else %}
-                        <span class="static-label comment-flag">
-                            <i class="fa fa-flag"></i> Flagged as inappropriate
-                        </span>
-                    {% endif %}
-                {% endif %}
-            {% endif %}
+				{% if settings.allowFlagging %}
+					{% if comment.flagActionUrl %}
+						<a href="{{ comment.flagActionUrl }}" class="comment-flag">
+							<i class="fa fa-flag"></i> Flag as inappropriate
+						</a>
+					{% else %}
+						<span class="static-label comment-flag">
+							<i class="fa fa-flag"></i> Flagged as inappropriate
+						</span>
+					{% endif %}
+				{% endif %}
+			{% endif %}
 
         </div>
     </div>

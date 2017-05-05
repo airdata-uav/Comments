@@ -21,20 +21,20 @@
     {% if comment is defined %}
         {% if comment.id %}<input type="hidden" name="parentId" value="{{ comment.id }}">{% endif %}
     {% endif %}
-
+    
     {# Anti-spam and security measures #}
     {{ craft.comments.protect() }}
     {{ getCsrfInput() }}
 
     {% if not currentUser %}
-
+	
         <div class="form-group name-input">
-            {% if airdataUser is defined and airdataUser.firstname is defined %}
-                {% set airdataName = [(airdataUser is defined and airdataUser.firstname is defined) ? airdataUser.firstname : '', (airdataUser is defined and airdataUser.lastname is defined) ? airdataUser.lastname : '']|join(' ') %}
-                <input class="form-control" name="fields[name]" type="text" placeholder="Your name" value="{{ airdataName }}">
-            {% else %}
-                <input class="form-control" name="fields[name]" type="text" placeholder="Your name" value="{{ attribute(activeComment, 'name') }}">
-            {% endif %}
+			{% if airdataUser is defined and airdataUser.firstname is defined %}
+				{% set airdataName = [(airdataUser is defined and airdataUser.firstname is defined) ? airdataUser.firstname : '', (airdataUser is defined and airdataUser.lastname is defined) ? airdataUser.lastname : '']|join(' ') %}
+				<input class="form-control" name="fields[name]" type="text" placeholder="Your name" value="{{ airdataName }}">
+			{% else %}
+				<input class="form-control" name="fields[name]" type="text" placeholder="Your name" value="{{ attribute(activeComment, 'name') }}">
+			{% endif %}
 
             {% if activeComment is defined %}
                 <div class="comment-errors-container">
@@ -44,11 +44,11 @@
         </div>
 
         <div class="form-group email-input">
-            {% if airdataUser is defined and airdataUser.email is defined %}
-                <input class="form-control" name="fields[email]" type="text" placeholder="Your email" value="{{ airdataUser.email }}">
-            {% else %}
-                <input class="form-control" name="fields[email]" type="text" placeholder="Your email" value="{{ attribute(activeComment, 'email') }}">
-            {% endif %}
+			{% if airdataUser is defined and airdataUser.email is defined %}
+				<input class="form-control" name="fields[email]" type="text" placeholder="Your email" value="{{ airdataUser.email }}">
+			{% else %}
+				<input class="form-control" name="fields[email]" type="text" placeholder="Your email" value="{{ attribute(activeComment, 'email') }}">
+			{% endif %}
 
             {% if activeComment is defined %}
                 <div class="comment-errors-container">
